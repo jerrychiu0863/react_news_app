@@ -13,18 +13,74 @@ body {
 
 .App {
   width: 1200px;
-  margin: 50px auto;
+  margin: 30px auto;
+
 }
 
 .App__mainBody {
     display: flex;
 }
 
-.search {
+/**********************************************/
+/* SEARCH FORM */
+
+.searchForm {
     text-align: center;
-    margin: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
+.searchForm p {
+    display: inline-block;
+}
+
+.searchForm img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50px;
+    display: block;
+    
+}
+
+.searchForm input {
+    padding: 10px;
+    flex-shrink: none;
+    width: 600px;
+    border: 2px solid rgba(198, 102, 75);
+    font-size: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .18);
+}
+
+.searchForm input:focus {
+    border: 2px solid rgba(198, 102, 75);
+    outline: none;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .28);
+}
+
+.searchForm-btn {
+    background-color: rgba(198, 102, 75);
+    border: none;
+    padding: 12.8px;
+    font-weight: 600;
+    color: aliceblue;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transform: translateY(-1px);
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .18);
+}
+
+.fa-user {
+    font-size: 25px;
+    color: #999;
+}
+
+.fa-user:hover {
+    cursor: pointer;
+    color: #333;
+}
 
 /**********************************************/
 /* MAIN CONTENT */
@@ -41,6 +97,9 @@ body {
     padding: 30px;
     margin-bottom: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.24);
+    border-left: 3px solid rgba(198, 102, 75);
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .listItem__mainContent {
@@ -65,7 +124,7 @@ body {
 }
 
 .detail-author {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 300;
     text-transform: uppercase;
     color: rgba(198, 102, 75);
@@ -86,21 +145,50 @@ body {
     color: #333;
 }
 
-.detail-likes {
-    
+.detail-vote {
+    display: flex;
+    align-items: center;
 }
+
+.vote-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.vote-btn i {
+    color: #999;
+    font-size: 15px;
+}
+
+.vote-btn i:hover {
+    color: #333;
+}
+
+.vote-btn-save {
+    border: 1px solid rgba(198, 102, 75, .8);
+    padding: 2px 10px;
+    border-radius: 20px;
+    color: #999;
+    transition: all linear .1s;
+}
+
+.vote-btn-save:hover {
+    background-color: rgba(198, 102, 75);
+    color: #fff;
+}
+
+.detail-vote p {
+    display: inline-block;
+    margin: 0 8px;
+}
+
 
 .detail-time {
     text-align: right;
     font-size: 10px;
     width: 540px;
 }
-
-.detail-likes p {
-    display: inline-block;
-    margin-left: 5px;
-}
-
 
 .listItem__subContent {
     background-color: black;

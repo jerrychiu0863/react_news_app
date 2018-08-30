@@ -64,7 +64,9 @@ class App extends Component {
       const { searchTerm } = this.state;
       e.preventDefault();
       this.fetchStories(searchTerm);
-      this.setState({savedArticles: []});
+      this.setState({savedArticles: [],
+                     searchTerm: ''
+                    });
 
   }
   
@@ -104,27 +106,16 @@ class App extends Component {
   handleSavedArticle = articleId => {
       
       const { savedArticles } = this.state;
-      
-      /*articles.map( article => {
-          console.log(article.id);
-          if(article.id !== articleId) {
-            return this.setState({savedArticles: [...savedArticles, article.id]});
-          } 
-      })*/
-      
+                  
       if(savedArticles.includes(articleId)) {
           return [];
       } else {
           return this.setState({savedArticles: [...savedArticles, articleId]});
       }
-      
  
-     /* const isId = article => article.id === articleId;
-      const updatearticles = articles.filter(isId);
-      this.setState({ newArticles: updatearticles});*/
   }
   
-  newArticle() {
+  renderArticleSaved() {
       const { savedArticles, articles } = this.state;
       
       var updatedSavedArticles = savedArticles.map( savedArticle => 
@@ -133,16 +124,12 @@ class App extends Component {
          return {...article};
         });
        
-      
-
-      return(
-         
-        <SideBar savedArticles={ updatedSavedArticles } />
-          
-      );
-
-   
-      
+      if(updatedSavedArticles.length !== 0) {
+          return <SideBar savedArticles={ updatedSavedArticles } />
+      } else {
+          return null;
+      }
+  
   }
 
   componentDidMount() {
@@ -152,7 +139,7 @@ class App extends Component {
   }
     
   render() {
-      const { articles } = this.state;
+      const { articles, searchTerm } = this.state;
       //console.log(savedArticles);
     return (
       <div className="App">
@@ -160,12 +147,15 @@ class App extends Component {
        <Search 
            onSubmit={ this.handleSubmit } 
            onChange={ this.handleChange } 
-       />
+           value={ searchTerm }
+       >
+           <img src="https://images.unsplash.com/photo-1529243856184-fd5465488984?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=95834c9e01a9ff2a5a61c79fc92a180f&dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb" alt="img" />
+       </Search>
        
        <div className="App__mainBody">
            { articles && <List articles={articles} sortByTime={this.sortByTime} handleLikes={this.handleLikes} handleDislikes={this.handleDislikes} handleSavedArticle={this.handleSavedArticle}/>}
            { articles.length === 0 && <Loading />}
-           <div>{this.newArticle()}</div>
+           <div>{this.renderArticleSaved()}</div>
        </div>
        
       </div>
