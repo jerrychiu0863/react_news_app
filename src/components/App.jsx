@@ -5,6 +5,7 @@ import _ from 'lodash';
 import './App.css';
 import List from './list';
 import Search from './search';
+import SideBar from './sideBar';
 
 const PATH_PROXY = 'https://cors-anywhere.herokuapp.com/';
 const PATH_BASE = 'https://newsapi.org/v2';
@@ -63,6 +64,7 @@ class App extends Component {
       const { searchTerm } = this.state;
       e.preventDefault();
       this.fetchStories(searchTerm);
+      this.setState({savedArticles: []});
 
   }
   
@@ -123,25 +125,24 @@ class App extends Component {
   }
   
   newArticle() {
-      const {savedArticles, articles} = this.state;
+      const { savedArticles, articles } = this.state;
       
       var updatedSavedArticles = savedArticles.map( savedArticle => 
         {
          var article = articles.find(article => article.id === savedArticle);
          return {...article};
         });
+       
       
-           console.log(updatedSavedArticles);
+
       return(
-        <div>
-           <ul>
-            {updatedSavedArticles.map(a => 
-                  <li>{a.author}</li>
-               
-            )}
-           </ul> 
-        </div>
+         
+        <SideBar savedArticles={ updatedSavedArticles } />
+          
       );
+
+   
+      
   }
 
   componentDidMount() {
@@ -155,13 +156,18 @@ class App extends Component {
       //console.log(savedArticles);
     return (
       <div className="App">
+      
        <Search 
            onSubmit={ this.handleSubmit } 
            onChange={ this.handleChange } 
        />
-       { articles && <List articles={articles} sortByTime={this.sortByTime} handleLikes={this.handleLikes} handleDislikes={this.handleDislikes} handleSavedArticle={this.handleSavedArticle}/>}
-       { articles.length === 0 && <Loading />}
-       <div>{this.newArticle()}</div>
+       
+       <div className="App__mainBody">
+           { articles && <List articles={articles} sortByTime={this.sortByTime} handleLikes={this.handleLikes} handleDislikes={this.handleDislikes} handleSavedArticle={this.handleSavedArticle}/>}
+           { articles.length === 0 && <Loading />}
+           <div>{this.newArticle()}</div>
+       </div>
+       
       </div>
     );
   }

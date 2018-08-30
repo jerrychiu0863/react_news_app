@@ -16,15 +16,21 @@ body {
   margin: 50px auto;
 }
 
+.App__mainBody {
+    display: flex;
+}
+
 .search {
     text-align: center;
     margin: 30px;
 }
 
+
+/**********************************************/
+/* MAIN CONTENT */
 .article__list {
     list-style: none;
     width: 800px;
-    
     margin: 0 auto;
 }
 
@@ -119,3 +125,51 @@ body {
     opacity: 0.8;
 }
 
+/**********************************************/
+/* SIDE BAR */
+.sideBar {
+    width: 400px;
+    list-style: none;
+    margin-left: 10px;
+    
+}
+
+.sideBar__mainContent {
+    display: flex;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+.sideBar__mainContent:hover {
+    background-color: rgba(194, 194, 194, 0.1);
+}
+
+.sideBar__img {
+    width: 80px;
+    height: 80px;
+}
+
+.sideBar__img img {
+    width: 80px;
+    height: 80px;
+}
+
+.sideBar__detail {
+    margin-left: 10px;
+
+}
+
+.sideBar__detail--title a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 18px;
+}
+
+.sideBar__detail--title a:hover {
+    color: #333;
+}
+
+.sideBar__detail--author {
+    font-size: 13px;
+    margin-top: 5px;
+}
