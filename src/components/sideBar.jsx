@@ -7,25 +7,29 @@ const SideBar = ({ savedArticles, onDismiss }) => {
         return(
             <ul className="sideBar">
                 {savedArticles.map( article => 
-                    <li key={article.id} className="sideBar__mainContent">
+                    <li key={ article.id } className="sideBar__mainContent">
 
                              <div className="sideBar__img">
-                                 <img src={article.urlToImage}  alt="img" />
+                                 <img src={ article.urlToImage }  alt="img" />
                              </div>
+                             
                              <div className="sideBar__detail">
-                                 <p className="sideBar__detail--title"><a href={article.url}>{article.title}</a></p>
-                                 <p className="sideBar__detail--author">{article.author}</p>
-                                 <Button onClick={() => onDismiss(article.id)}>
-                                     Dismiss
+                                
+                                 <p className="sideBar__detail--title">
+                                    <a href={ article.url }>{ article.title }</a>
+                                 </p>
+                                 <p className="sideBar__detail--author">{ article.author }</p>
+                                 <Button 
+                                    onClick={() => onDismiss(article.id)} className="sideBar-btn-save"
+                                 >
+                                     <i className="fas fa-times-circle"></i>
                                  </Button>
+                                 
                              </div>
-
-                    </li>
+                     </li>
                 )}
             </ul> 
         );
-
-    
 }
 
 export default SideBar;

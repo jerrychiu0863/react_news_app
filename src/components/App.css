@@ -1,3 +1,4 @@
+
 *,
 *::before,
 *::after {
@@ -19,6 +20,28 @@ body {
 
 .App__mainBody {
     display: flex;
+}
+
+/**********************************************/
+/* ANIMATION */
+
+@keyframes spinning {
+    from {transform: rotate(0deg)}
+    to {transform: rotate(360deg)}
+}
+
+/**********************************************/
+/* LOADING */
+
+.loading {
+    margin: 100px auto;
+    animation: spinning 5s linear infinite;
+
+}
+
+.loading i {
+    font-size: 50px;
+    color: rgba(198, 102, 75);
 }
 
 /**********************************************/
@@ -225,7 +248,9 @@ body {
 .sideBar__mainContent {
     display: flex;
     background-color: #fff;
-    margin-bottom: 10px;
+    position: relative;
+    padding: 10px;
+    padding-right: 15px;
 }
 
 .sideBar__mainContent:hover {
@@ -244,7 +269,6 @@ body {
 
 .sideBar__detail {
     margin-left: 10px;
-
 }
 
 .sideBar__detail--title a {
@@ -260,4 +284,25 @@ body {
 .sideBar__detail--author {
     font-size: 13px;
     margin-top: 5px;
+}
+
+.sideBar-btn-save {
+    background-color: transparent;
+    border: none;
+    color: #999;
+    opacity: 0;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.sideBar-btn-save i {
+    font-size: 15px;
+    color: #999;
+    display: inline-block;
+}
+
+.sideBar__mainContent:hover .sideBar-btn-save {
+   opacity: 1;
 }

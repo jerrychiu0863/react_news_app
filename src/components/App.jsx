@@ -6,21 +6,15 @@ import './App.css';
 import List from './list';
 import Search from './search';
 import SideBar from './sideBar';
+import Loading from './loading';
 
 const PATH_PROXY = 'https://cors-anywhere.herokuapp.com/';
 const PATH_BASE = 'https://newsapi.org/v2';
-//const PATH_SOURCES = '/sources';
 const PATH_EVERYTHING = '/everything'
 //const DEFAULT_QUERY = 'apple';
 
 const API_KEY = '8192195307294c62b0d688ae4ee74c39';
 //const URL = `${PATH_PROXY}${PATH_BASE}${PATH_EVERYTHING}?q=${DEFAULT_QUERY}&apiKey=${API_KEY}`;
-
-const Loading = () => {
-    return(
-        <div>Loading</div>
-    );
-}
 
 class App extends Component {
   constructor(props) {
@@ -30,25 +24,29 @@ class App extends Component {
           articles: [],
           error: null,
           searchTerm: '',
-          savedArticles: []
+          savedArticles: [],
+          isLoading: false
       };
   };
       
   fetchStories(searchTerm) {
-            
+      this.setState({isLoading: true});
+      
       axios(`${PATH_PROXY}${PATH_BASE}${PATH_EVERYTHING}?q=${searchTerm}&apiKey=${API_KEY}`)
       .then(results => this.setSearchStories(results))
       .catch(error => this.setState({ error }))
+  
   }
 
   setSearchStories(results) {
     
       const updatedResults = results.data.articles.map( article => {
-          return Object.assign({}, article, { likes: 0, id: _.uniqueId(), dislikes: 0 })
+          return Object.assign({}, article, { likes: Math.floor(Math.random() * 20), id: _.uniqueId(), dislikes: Math.floor(Math.random() * 10) })
       })
       
       this.setState({
-          articles: updatedResults
+          articles: updatedResults,
+          isLoading: false
       });
   }
 
@@ -64,8 +62,8 @@ class App extends Component {
       const { searchTerm } = this.state;
       e.preventDefault();
       this.fetchStories(searchTerm);
-      this.setState({savedArticles: [],
-                     searchTerm: ''
+      this.setState({ savedArticles: [],
+                      searchTerm: ''
                     });
 
   }
@@ -115,12 +113,6 @@ class App extends Component {
               return null;
           }
       })
-                  
-      /*if(savedArticles.includes(articleId)) {
-          return [];
-      } else {
-          return this.setState({savedArticles: [...savedArticles, articleId]});
-      }*/
  
   }
    
@@ -128,17 +120,17 @@ class App extends Component {
       const { savedArticles } = this.state;
       const isNotId = article => article.id !== articleId;
       const updatedSavedArticles = savedArticles.filter(isNotId);
-      this.setState({savedArticles: updatedSavedArticles})
+      this.setState({ savedArticles: updatedSavedArticles });
   }
   
   componentDidMount() {
 
       this.fetchStories('apple');
-
+  
   }
     
   render() {
-      const { articles, searchTerm, savedArticles } = this.state;
+      const { articles, searchTerm, savedArticles, isLoading } = this.state;
       console.log(savedArticles);
     return (
       <div className="App">
@@ -153,9 +145,24 @@ class App extends Component {
        
        <div className="App__mainBody">
            
-           { articles.length !== 0 ? <List articles={articles} sortByTime={this.sortByTime} handleLikes={this.handleLikes} handleDislikes={this.handleDislikes} handleSavedArticle={this.handleSavedArticle}/> : <Loading />}
+           { isLoading 
+               ? <Loading /> 
+               : <List 
+                   articles={ articles } 
+                   sortByTime={ this.sortByTime } 
+                   handleLikes={ this.handleLikes } 
+                   handleDislikes={ this.handleDislikes } 
+                   handleSavedArticle={ this.handleSavedArticle } 
+                 />
+           }
            
-           {savedArticles.length !== 0 ? <SideBar savedArticles={savedArticles} onDismiss={this.onDismiss}/> : null}
+           { savedArticles.length !== 0 
+               ? <SideBar 
+                   savedArticles={savedArticles} 
+                   onDismiss={this.onDismiss}
+                 /> 
+               : null
+           }
        </div>
        
       </div>
