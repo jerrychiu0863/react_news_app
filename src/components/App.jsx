@@ -105,33 +105,32 @@ class App extends Component {
   
   handleSavedArticle = articleId => {
       
-      const { savedArticles } = this.state;
+      const { savedArticles, articles } = this.state;
+      let saveTwice = savedArticles.find( savedArticle => savedArticle.id === articleId );
+      
+      articles.map(article => {
+          if(article.id === articleId && !saveTwice ) {
+             return this.setState({savedArticles: [...savedArticles, article]})
+          } else {
+              return null;
+          }
+      })
                   
-      if(savedArticles.includes(articleId)) {
+      /*if(savedArticles.includes(articleId)) {
           return [];
       } else {
           return this.setState({savedArticles: [...savedArticles, articleId]});
-      }
+      }*/
  
   }
-  
-  renderArticleSaved() {
-      const { savedArticles, articles } = this.state;
-      
-      var updatedSavedArticles = savedArticles.map( savedArticle => 
-        {
-         var article = articles.find(article => article.id === savedArticle);
-         return {...article};
-        });
-       
-      if(updatedSavedArticles.length !== 0) {
-          return <SideBar savedArticles={ updatedSavedArticles } />
-      } else {
-          return null;
-      }
-  
+   
+  onDismiss = articleId => {
+      const { savedArticles } = this.state;
+      const isNotId = article => article.id !== articleId;
+      const updatedSavedArticles = savedArticles.filter(isNotId);
+      this.setState({savedArticles: updatedSavedArticles})
   }
-
+  
   componentDidMount() {
 
       this.fetchStories('apple');
@@ -139,8 +138,8 @@ class App extends Component {
   }
     
   render() {
-      const { articles, searchTerm } = this.state;
-      //console.log(savedArticles);
+      const { articles, searchTerm, savedArticles } = this.state;
+      console.log(savedArticles);
     return (
       <div className="App">
       
@@ -153,9 +152,10 @@ class App extends Component {
        </Search>
        
        <div className="App__mainBody">
-           { articles && <List articles={articles} sortByTime={this.sortByTime} handleLikes={this.handleLikes} handleDislikes={this.handleDislikes} handleSavedArticle={this.handleSavedArticle}/>}
-           { articles.length === 0 && <Loading />}
-           <div>{this.renderArticleSaved()}</div>
+           
+           { articles.length !== 0 ? <List articles={articles} sortByTime={this.sortByTime} handleLikes={this.handleLikes} handleDislikes={this.handleDislikes} handleSavedArticle={this.handleSavedArticle}/> : <Loading />}
+           
+           {savedArticles.length !== 0 ? <SideBar savedArticles={savedArticles} onDismiss={this.onDismiss}/> : null}
        </div>
        
       </div>

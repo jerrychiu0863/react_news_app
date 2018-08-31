@@ -1,7 +1,9 @@
 import React from 'react';
 
-const SideBar = ({ savedArticles }) => {
+import Button from './button';
 
+const SideBar = ({ savedArticles, onDismiss }) => {
+            
         return(
             <ul className="sideBar">
                 {savedArticles.map( article => 
@@ -13,6 +15,9 @@ const SideBar = ({ savedArticles }) => {
                              <div className="sideBar__detail">
                                  <p className="sideBar__detail--title"><a href={article.url}>{article.title}</a></p>
                                  <p className="sideBar__detail--author">{article.author}</p>
+                                 <Button onClick={() => onDismiss(article.id)}>
+                                     Dismiss
+                                 </Button>
                              </div>
 
                     </li>
