@@ -6,7 +6,7 @@ import './App.css';
 import List from './list';
 import Search from './search';
 import SideBar from './sideBar';
-import Loading from './loading';
+import Loader from './loader';
 
 const PATH_PROXY = 'https://cors-anywhere.herokuapp.com/';
 const PATH_BASE = 'https://newsapi.org/v2';
@@ -30,7 +30,7 @@ class App extends Component {
   };
       
   fetchStories(searchTerm) {
-      this.setState({isLoading: true});
+      this.setState({ isLoading: true });
       
       axios(`${PATH_PROXY}${PATH_BASE}${PATH_EVERYTHING}?q=${searchTerm}&apiKey=${API_KEY}`)
       .then(results => this.setSearchStories(results))
@@ -146,7 +146,7 @@ class App extends Component {
        <div className="App__mainBody">
            
            { isLoading 
-               ? <Loading /> 
+               ? <Loader /> 
                : <List 
                    articles={ articles } 
                    sortByTime={ this.sortByTime } 
